@@ -1,0 +1,78 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+build/
+dist/
+wheels/
+.installed.cfg
+.pip-deps
+
+# =========================
+# Virtual Environments
+# =========================
+.venv/
+venv/
+env/
+netsage_env/
+
+# Environment variables
+.env
+
+# Pip logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# =========================
+# IDE / Editor Files
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# Uploads & Generated Data
+# =========================
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+backend/data/events.json
+
+# Reports
+reports/*.pdf
+reports/*.docx
+
+# =========================
+# Temporary / AI Artifacts
+# =========================
+tmp/
+brain/
+.gemini/
+
+# =========================
+# Media / Large Files
+# =========================
+*.pcap
+*.pcapng
+*.cap
+*.mp4
