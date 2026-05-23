@@ -28,6 +28,9 @@ SUSPICIOUS_PORTS = {
 # A set of standard ports that are often scanned by bots or discovery tools.
 SCAN_PORTS = {80, 443, 8080, 8443, 22, 3389, 445, 139, 21, 25, 53, 123}
 
+# UDP ports commonly abused by malware/backdoors
+SUSPICIOUS_UDP_PORTS = {31337, 4444, 5555, 6667, 9999}
+
 class ThreatHeuristics:
     """
     Expert system that scans for attack patterns in the network story.
@@ -102,4 +105,38 @@ class ThreatHeuristics:
                     'dns_id': dns_id
                 })
         
+        return detected_patterns
+    
+    @staticmethod
+    def detect_suspicious_udp(event_list):
+        """
+        Detects UDP traffic using suspicious or uncommon ports.
+        These ports are sometimes associated with malware,
+        reverse shells, or hacker tools.
+        """
+        detected_patterns = []
+
+        # Look through every forensic event
+        for event in event_list:
+
+            # Only analyze UDP events
+            if event.get('type') == 'UDP':
+
+                details = event.get('details', {})
+                source_port = details.get('sport')
+                dest_port = details.get('dport')
+
+                # Check if either port is suspicious
+                if source_port in SUSPICIOUS_UDP_PORTS or dest_port in SUSPICIOUS_UDP_PORTS:
+
+                    suspicious_port = source_port if source_port in SUSPICIOUS_UDP_PORTS else dest_port
+
+                    detected_patterns.append({
+                        'type': 'suspicious_udp',
+                        'severity': 'HIGH',
+                        'source': event.get('source_ip'),
+                        'description': f"Suspicious UDP activity detected on port {suspicious_port}",
+                        'port': suspicious_port
+                    })
+                    
         return detected_patterns

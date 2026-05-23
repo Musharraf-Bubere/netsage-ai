@@ -128,6 +128,7 @@ class PCAPParser:
             ProtocolHandlers.parse_http(packet, self, timestamp, source_ip, dest_ip, flow_key)
             ProtocolHandlers.parse_tls(packet, self, timestamp, source_ip, dest_ip, flow_key)
             ProtocolHandlers.parse_icmp(packet, self, timestamp, source_ip, dest_ip)
+            ProtocolHandlers.parse_udp(packet, self, timestamp, source_ip, dest_ip)
 
         return self.events, self.links
 

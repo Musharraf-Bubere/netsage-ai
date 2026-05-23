@@ -133,3 +133,25 @@ class ProtocolHandlers:
                 {'type': icmp_type}, 
                 f"ICMP {type_label} Message"
             )
+
+    @staticmethod
+    def parse_udp(packet, parser, timestamp, source_ip, dest_ip):
+        """
+        Parses UDP (User Datagram Protocol) packets.
+        UDP is a fast connectionless protocol commonly used for 
+        DNS, streaming, gaming, and voice traffic.
+        """
+        if packet.haslayer('UDP'):
+            udp_layer = packet['UDP']
+
+            parser._add_event(
+                'UDP',
+                timestamp,
+                source_ip,
+                dest_ip,
+                {
+                    'sport': udp_layer.sport,
+                    'dport': udp_layer.dport
+                },
+                f"UDP Traffic: {source_ip}:{udp_layer.sport} -> {dest_ip}:{udp_layer.dport}"
+            )

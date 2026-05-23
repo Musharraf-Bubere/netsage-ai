@@ -107,6 +107,9 @@ class ThreatAnalyzer:
         
         # Engine 2: Scan for DNS-to-Server connections (possible data theft)
         patterns_found.extend(ThreatHeuristics.detect_dns_tunnels(self.events, self.links))
+
+        # Engine 3: Detect suspicious UDP traffic patterns
+        patterns_found.extend(ThreatHeuristics.detect_suspicious_udp(self.events))
         
         # Expert Rule: Too many web requests could mean an automated scraper is at work
         web_requests = [e for e in self.events if e['type'] == 'HTTP Request']
